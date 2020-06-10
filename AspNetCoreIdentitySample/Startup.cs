@@ -30,8 +30,17 @@ namespace AspNetCoreIdentitySample
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+
+            services.AddIdentity<IdentityUser , IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+           // services.AddIdentity<IdentityUser, IdentityRole>(options =>
+           //{
+           //    options.Password.RequireDigit = false;  //parolaya rakam girmk zorunlu deðil
+
+           //});
+
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
@@ -55,7 +64,7 @@ namespace AspNetCoreIdentitySample
 
             app.UseRouting();
 
-            app.UseAuthentication();
+            app.UseAuthentication();  //cookie varsa senin kimlik doðrulamaný yapýyor
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
